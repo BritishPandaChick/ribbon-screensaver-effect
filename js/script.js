@@ -7,13 +7,9 @@ window.onload = function(){
     canvas.width = W;
     canvas.height = H;
 
-    //Lets fill the canvas black 
-    ctx.fillStyle = "black";
-    ctx.fillRect(0, 0, W, H);
-
     //Lets make some particles 
     var particles = [];
-    for(var i = 0; i < 40; i++){
+    for(var i = 0; i < 30; i++){
         particles.push(new particles());
     }
 
@@ -26,21 +22,61 @@ window.onload = function(){
         this.speed = 3;
         //steering angle in degrees range = -360 to 360
         this.angle = Math.random()*360;
+        //colors 
+        var r = Math.round(Math.random()*255);
+        var g = Math.round(Math.random()*255);
+        var b = Math.round(Math.random()*255);
+        var a = Math.random();
+        var rgba = "rgba("+ r + "," + g + "," +  b + "," + a)";
     }
 
     //Lets draw the particles 
     function draw(){
+        //re-paint the BG 
+        //Lets fill the canvas black
+        //reduce opacity of bg fill  
+        ctx.fillStyle = "rgba(0, 0, 0, 0.01)";
+        ctx.fillRect(0, 0, W, H);
+
+
         for(var i = 0; i < particles.length; i++){
             var p = particles[i];
             ctx.fillStyle = "white";
             ctx.fillRect(p.location.x, p.location.y, p.radius, p.radius);
 
             //Lets move the particles 
-            //a random angle for the particle to steer to 
-            var req_angle = Math.random()*360;
-            if(req_angle > p.angle) {
-                p.angle
+            //So we basically created a set of particles moving in random directions 
+            //at the same speed 
+            //Time to add ribbon effect 
+            for(var n = 0; n < particles.length; n++){
+                var p2 = particles[n]; 
+                //calculating distance of particle with all other particles 
+                var yd = p2.location.y - p.location.y; 
+                var xd = p2.location.x - p.location.x;
+                var distance = Math.sqrt(xd*xd + yd*yd);
+                //draw a lin between both particles if they are in 200px range
+                if(distance < 200){
+                    ctx.beginPath();
+                    ctx.lineWidth = 1;
+                    ctx.moveTo(p.location.x, p.location.y);
+                    ctx.linTo(p2.location.x, p2.location.y);
+                    ctx.strokeStyle = "white";
+                    ctx.stroke();
+                    //The ribbons appear now;
+                } 
             }
+
+            //We are using simple vectors here 
+            //New x = old x + speed * cos(angle)
+            p.location.x = p.location.x + p.speed*Math.cos(p.angle*Math.PI/180);
+            //New y = old y + speed * sin(angle)
+            p.location.y = p.location.y + p.speed*Math.sin(p.angle*Math.PI/180);
+            //You can read about vectors here:
+            //http://physics.about.com/od/mathematics/a/VectorMath.htm 
+            if(p.location.x < 0) p.location.x = W;
+            if(p.location.x > W) p.location.x = 0;
+            if(p.location.y < 0) p.location.y = H;
+            if(p.location.y > H) p.location.y = 0;
         }
     }
 
