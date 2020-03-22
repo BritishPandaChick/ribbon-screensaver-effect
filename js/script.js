@@ -9,15 +9,15 @@ window.onload = function(){
 
     //Lets make some particles 
     var particles = [];
-    for(var i = 0; i < 30; i++){
+    for(var i = 0; i < 25; i++){
         particles.push(new particles());
     }
 
     function particle(){
         //location on the canvas 
         this.location = {x: Math.random()*W., y:Math.random()*H};
-        //radius 
-        this.radius = 3;
+        //radius - lets make this 0 
+        this.radius = 0;
         //speed 
         this.speed = 3;
         //steering angle in degrees range = -360 to 360
@@ -27,17 +27,19 @@ window.onload = function(){
         var g = Math.round(Math.random()*255);
         var b = Math.round(Math.random()*255);
         var a = Math.random();
-        var rgba = "rgba("+ r + "," + g + "," +  b + "," + a)";
+        this.rgba = "rgba("+ r + "," + g + "," +  b + "," + a)";
     }
 
     //Lets draw the particles 
     function draw(){
         //re-paint the BG 
         //Lets fill the canvas black
-        //reduce opacity of bg fill  
-        ctx.fillStyle = "rgba(0, 0, 0, 0.01)";
+        //reduce opacity of bg fill 
+        //blending time 
+        ctx.globalCompositeOperation = "source-over";
+        ctx.fillStyle = "rgba(0, 0, 0, 0.02)";
         ctx.fillRect(0, 0, W, H);
-
+        ctx.globalCompositeOperation = "lighter";
 
         for(var i = 0; i < particles.length; i++){
             var p = particles[i];
@@ -60,7 +62,7 @@ window.onload = function(){
                     ctx.lineWidth = 1;
                     ctx.moveTo(p.location.x, p.location.y);
                     ctx.linTo(p2.location.x, p2.location.y);
-                    ctx.strokeStyle = "white";
+                    ctx.strokeStyle = p.rgba;
                     ctx.stroke();
                     //The ribbons appear now;
                 } 
