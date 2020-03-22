@@ -2,7 +2,7 @@ window.onload = function(){
     var canvas = document.getElementById("canvas");
     var ctx = canvas.getContext("2d");
 
-    //Lets make the canvas occupy the full page 
+    //Let's make the canvas occupy the full page 
     var W = window.innerWidth, H = window.innerHeight; 
     canvas.width = W;
     canvas.height = H;
@@ -10,7 +10,7 @@ window.onload = function(){
     //Lets make some particles 
     var particles = [];
     for(var i = 0; i < 25; i++){
-        particles.push(new particles());
+        particles.push(new particle());
     }
 
     function particle(){
@@ -27,7 +27,7 @@ window.onload = function(){
         var g = Math.round(Math.random()*255);
         var b = Math.round(Math.random()*255);
         var a = Math.random();
-        this.rgba = "rgba("+ r + "," + g + "," +  b + "," + a)";
+        this.rgba = "rgba("+ r + ", " + g + ", " + b + ", " + a + ")";
     }
 
     //Lets draw the particles 
@@ -61,7 +61,7 @@ window.onload = function(){
                     ctx.beginPath();
                     ctx.lineWidth = 1;
                     ctx.moveTo(p.location.x, p.location.y);
-                    ctx.linTo(p2.location.x, p2.location.y);
+                    ctx.lineTo(p2.location.x, p2.location.y);
                     ctx.strokeStyle = p.rgba;
                     ctx.stroke();
                     //The ribbons appear now;
@@ -75,6 +75,7 @@ window.onload = function(){
             p.location.y = p.location.y + p.speed*Math.sin(p.angle*Math.PI/180);
             //You can read about vectors here:
             //http://physics.about.com/od/mathematics/a/VectorMath.htm 
+            
             if(p.location.x < 0) p.location.x = W;
             if(p.location.x > W) p.location.x = 0;
             if(p.location.y < 0) p.location.y = H;
