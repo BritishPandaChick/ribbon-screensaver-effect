@@ -1,11 +1,13 @@
 # Glazing ribbon screensaver effect
-CodePlayer Glazing ribbbon screensaver effect in HTML5 canvas project. Made with HTML, CSS, and JavaScript.
+An example of the ribbbon screensaver
+
+## Tech Stack
+- HTML
+- CSS
+- JavaScript
 
 ## Instructions
-Clone this repo or download zip file. Open index.html file in your browser.
-
-## Contributions
-This code is based on starter code from TheCodePlayer.com. Therefore I will not be accepting any pull requests.
+Clone this repo or download zip file. The ribbon screensaver would begin working on the page.
 
 ## Acknowledgements
 * TheCodePlayer.com
